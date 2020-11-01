@@ -39,7 +39,6 @@ public class CoronaVirusDataService {
                 .build();
         // Send the request and receive the response body as a string
         HttpResponse<String> httpResponse = client.send(request, HttpResponse.BodyHandlers.ofString());
-        // System.out.println(httpResponse.body());
         // Parse the response body with the Apache Commons CSV library
         StringReader csvBodyReader = new StringReader(httpResponse.body());
         Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBodyReader);
@@ -54,7 +53,6 @@ public class CoronaVirusDataService {
             int prevDayCases = Integer.parseInt(record.get(record.size() - 2));
             locationStat.setLatestTotalCases(latestCases);
             locationStat.setDiffFromPrevDay(latestCases - prevDayCases);
-            // System.out.println(locationStat);
             newStats.add(locationStat);
         }
         this.allStats = newStats;
